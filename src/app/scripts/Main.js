@@ -5,6 +5,7 @@ var exec = require("child_process").exec;
 var path = require("path");
 var md5 = require("MD5");
 var ansi2html = require('ansi2html');
+var findup = require('findup-sync');
 var gui = require('nw.gui');
 var winMain = gui.Window.get();
 
@@ -53,8 +54,9 @@ $(document).ready(function () {
     //任务运行
     $body.on('click', '.JS-Task-Run', function () {
         var project_id = $(this).attr('data-project-id');
+        var project_type = $(this).attr('data-project-type');
         var task_name = $(this).attr('data-task-name');
-        spock.app.runTask(project_id, task_name);
+        spock.app.runTask(project_id, project_type, task_name);
         return false;
     });
 

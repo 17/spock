@@ -72,8 +72,8 @@ var TmTSpock = (function () {
         }, 100)();
     };
 
-    TmTSpock.prototype.runTask = function (project_id, task_name) {
-        spock.terminalManager.runTask(project_id, task_name, function () {
+    TmTSpock.prototype.runTask = function (project_id, project_type, task_name) {
+        spock.terminalManager.runTask(project_id, project_type, task_name, function () {
             //start event
             $('#task_item_' + project_id + "_" + task_name).addClass('task-list__item_running');
             $('#task_item_' + project_id + "_" + task_name).removeClass('task-list__item_error');
