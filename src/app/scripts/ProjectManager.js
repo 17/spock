@@ -30,15 +30,25 @@ var ProjectManager = (function () {
 
             if (type === 'grunt') {
 
-                var grunt = require(dir + '/node_modules/grunt/');
+                try {
+                    var grunt = require(dir + '/node_modules/grunt/');
+                } catch (e) {
+                    window.alert('Local Npm module "grunt" not found. Is it installed?');
+                    return
+                }
 
                 require(GruntFile)(grunt);
                 var TaskList = grunt.task._tasks;
 
             } else if (type === 'gulp') {
 
-                var resolve = require(dir + '/node_modules/gulp/node_modules/resolve/');
-                var gulp = require(resolve.sync('gulp', {basedir: dir + '/node_modules/'}));
+                try {
+                    var resolve = require(dir + '/node_modules/gulp/node_modules/resolve/');
+                    var gulp = require(resolve.sync('gulp', {basedir: dir + '/node_modules/'}));
+                } catch (e) {
+                    window.alert('Local Npm module "gulp" not found. Is it installed?');
+                    return
+                }
 
                 require(gulpFile);
                 var TaskList = gulp.tasks;
