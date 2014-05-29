@@ -1,19 +1,14 @@
-spock
-============
-
-A Grunt GUI Tool
+# Spock
 
 ![Spock App](http://s.willerce.com/lab/spock/spock.png)
 
-Spock is a GUI frontend for Grunt. Unlike Koala and Prepros, Spock merely provides a graphic interface, without adding any extra functionality.
+这是又一个图像界面前端自动化工具, 分支于原版 Spock 0.0.2 版本.
 
-Instead of Grunt's original command line interface, Spock's graphic interface helps the new Grunt users.
-We hope Spock can promote the usage of Grunt. 
+添加了对 Gulp 的支持, 还对一些错误进行了修复. ( •̀ ω •́ )✧
 
-Download: [github.com/Mobile-Team/spock/releases](https://github.com/Mobile-Team/spock/releases).
+经过近 2 个月的调教, 目前已达到人畜无害的地步.
 
-Website (Chinese): [getspock.com](http://getspock.com/)
+如果你发现了什么 BUG 欢迎给我戳个 Issues.
 
-##Features
-
-##TODO
+## License
+MIT
