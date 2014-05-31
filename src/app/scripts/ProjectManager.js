@@ -18,26 +18,45 @@ var ProjectManager = (function () {
             var project_name = path.basename(dir);
             var project_id = spock.util.uid(project_name);
 
-            var GruntPath = dir + '/node_modules/grunt/';
+            var GruntFile = findup('Gruntfile.{js,coffee}', {cwd: dir, nocase: true});
+            var gulpFile = findup('gulpfile.js', {cwd: dir, nocase: true});
 
-            if (!fs.existsSync(GruntPath)) {
-                window.alert('Unable to find local grunt.');
+            if (!GruntFile && !gulpFile) {
+                window.alert('Unable to find config file.');
                 return
             }
 
-            var grunt = require(dir + "/node_modules/grunt/");
+            var type = GruntFile ? 'grunt' : gulpFile ? 'gulp' : null;
 
-            var GruntinitConfigFnPath = grunt.file.findup('Gruntfile.{js,coffee}', {cwd: dir, nocase: true});
+            if (type === 'grunt') {
 
-            if (GruntinitConfigFnPath === null) {
-                window.alert('Unable to find Gruntfile.');
-                return
+                try {
+                    var grunt = require(dir + '/node_modules/grunt/');
+                } catch (e) {
+                    window.alert('Local Npm module "grunt" not found. Is it installed?');
+                    return
+                }
+
+                require(GruntFile)(grunt);
+                var TaskList = grunt.task._tasks;
+
+            } else if (type === 'gulp') {
+
+                try {
+                    var resolve = require(dir + '/node_modules/gulp/node_modules/resolve/');
+                    var gulp = require(resolve.sync('gulp', {basedir: dir + '/node_modules/'}));
+                } catch (e) {
+                    window.alert('Local Npm module "gulp" not found. Is it installed?');
+                    return
+                }
+
+                require(gulpFile);
+                var TaskList = gulp.tasks;
+
             }
-
-            require(GruntinitConfigFnPath)(grunt);
 
             var tasks = [];
-            _.each(grunt.task._tasks, function (task) {
+            _.each(TaskList, function (task) {
                 tasks.push(task.name);
             });
 
@@ -46,6 +65,7 @@ var ProjectManager = (function () {
                 name: project_name,
                 path: dir,
                 tasks: tasks,
+                type: type,
                 config: {
                 }
             };

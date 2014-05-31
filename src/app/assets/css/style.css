@@ -102,7 +102,6 @@ body {
     position: relative;
     overflow: hidden;
     -webkit-user-select: none;
-    -webkit-app-region: drag;
 }
 
 .animation {

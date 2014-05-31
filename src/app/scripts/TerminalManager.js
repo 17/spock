@@ -1,7 +1,6 @@
 var TerminalManager = (function () {
 
     var TerminalManager = function () {
-        this.command = (process.platform === 'win32') ? 'grunt.cmd' : 'grunt';
         this.process_list = {};
     };
 
@@ -30,13 +29,26 @@ var TerminalManager = (function () {
     };
 
 
-    TerminalManager.prototype.runTask = function (project_id, task_name, startCb, endCb, errorCb) {
+    TerminalManager.prototype.runTask = function (project_id, project_type, task_name, startCb, endCb, errorCb) {
 
         var project = spock.projectManager.getById(project_id);
+        
+        var cmdmap = {
+            win32: {
+                grunt: 'grunt.cmd',
+                gulp: 'gulp.cmd'
+            },
+            other: {
+                grunt: 'grunt',
+                gulp: 'gulp'
+            }
+        };
+
+        var command = process.platform === 'win32'? cmdmap.win32[project_type] : cmdmap.other[project_type];
 
         startCb();
 
-        var terminal = spawn(this.command, [task_name], {cwd: project.path});
+        var terminal = spawn(command, [task_name], {cwd: project.path});
 
         //如果这个
         if (_.isUndefined(this.process_list[project_id])) {

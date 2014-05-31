@@ -1,21 +1,21 @@
 {
   "name": "Spock",
   "description": "A Grunt Gui Tool",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "app/app.html",
   "single-instance": true,
   "window": {
     "icon": "resource/icon512x512.png",
-    "show": true,
-    "toolbar": true,
-    "frame": true,
     "position": "center",
     "width": 480,
     "height": 400,
-    "resizable": false
+    "resizable": false,
+    "toolbar": false,
+    "frame": false
   },
   "dependencies": {
-    "MD5": "1.2.0",
-    "ansi2html": "0.0.1"
+    "MD5": "~1.2.0",
+    "findup-sync": "~0.1.2",
+    "ansi2html": "~0.0.1"
   }
 }
